@@ -29,6 +29,7 @@
         Action
       </div>
     </div>
+    @include('flash-message')
     <div class="table-body">
       @foreach ($players as $player)
         <div
@@ -37,52 +38,64 @@
             {{ $player->name }}
           </div>
           <div class="font-Source text-base text-primary opacity-80 text-left w-[10%] flex place-content-center">
-            <button
-              class="hover:bg-gray-100 w-12 h-12 duration-500 rounded-full flex place-content-center place-items-center"
-              onclick="deleteRow(this);">
-              <svg fill="#424242" width="35" height="35" version="2.0">
-                <use href="#trash-bin" />
-              </svg>
-            </button>
+            <form method="POST" action="{{ route('player.destroy') }}">
+              <input type="hidden" name="id" value="{{ $player->id }}">
+              @csrf
+              <button
+                class="hover:bg-gray-100 w-12 h-12 duration-500 rounded-full flex place-content-center place-items-center"
+                onclick="event.preventDefault();this.closest('form').submit();">
+                <svg fill="#424242" width="35" height="35" version="2.0">
+                  <use href="#trash-bin" />
+                </svg>
+              </button>
+            </form>
+
           </div>
         </div>
       @endforeach
 
     </div>
-    <div
-      class=" add-row flex h-20 px-4 place-items-center border-b-secondary border-b-[1px] border-opacity-50 gap-x-[5%]">
-      <div class="font-Source text-base text-primary opacity-80 text-left w-[85%]">
-        <input id="nama"
-          class="appearance-none h-[40px] block w-full text-primary rounded py-3 px-4 leading-tight ring-1 ring-opacity-50 ring-secondary focus-visible:outline-none focus-visible:ring-blue-500"
-          type="text" placeholder="Nama" onkeypress="if (event.keyCode == 13) {addRow();}" />
-      </div>
+    <div>
+      <form method="POST" action="{{ route('player.store') }}"
+        class="add-row flex h-20 px-4 place-items-center border-b-secondary border-b-[1px] border-opacity-50 gap-x-[5%]">
+        @csrf
+
+        <div class="font-Source text-base text-primary opacity-80 text-left w-[85%]">
+          <input id="nama"
+            class="appearance-none h-[40px] block w-full text-primary rounded py-3 px-4 leading-tight ring-1 ring-opacity-50 ring-secondary focus-visible:outline-none focus-visible:ring-blue-500"
+            type="text" name="nama" placeholder="Nama"
+            onkeypress="if (event.keyCode == 13) {this.closest('form').submit();}" />
+        </div>
 
 
-      <div class="font-Source text-base text-primary opacity-80 text-left w-[10%] flex place-content-center">
-        <button
-          class="hover:bg-gray-100 w-12 h-12 duration-500 rounded-full flex place-content-center place-items-center"
-          onclick="addRow();">
-          <svg fill="#424242" store="#424242" width="35" height="35" version="2.0">
-            <use href="#check" />
-          </svg>
-        </button>
-      </div>
+        <div class="font-Source text-base text-primary opacity-80 text-left w-[10%] flex place-content-center">
+          <button
+            class="hover:bg-gray-100 w-12 h-12 duration-500 rounded-full flex place-content-center place-items-center"
+            onclick="event.preventDefault();this.closest('form').submit();">
+            <svg fill="#424242" store="#424242" width="35" height="35" version="2.0">
+              <use href="#check" />
+            </svg>
+          </button>
+        </div>
+      </form>
+
     </div>
     <div
       class=" flex h-20 px-4 place-items-center place-content-between border-b-secondary border-b border-opacity-50  ">
       <div class="font-Source text-base  text-primary opacity-80 text-left w-[30%] flex place-content-start">
-        <button class="hover:underline w-content font-bold duration-500 " onclick="addRandom();">
-          Tambah Nama Random
-        </button>
+
       </div>
 
 
       <div class="font-Source text-base  text-primary opacity-80 text-left w-[30%] flex place-content-end pr-3">
-        {{-- <form id=form onsubmit="createTeam(); return false;" method="GET"> --}}
-        <button onclick="createTeam();" name="submit" class="hover:underline w-content font-bold duration-500">
-          Buat Tim
-          {{-- </button> --}}
-          </form>
+        <form method="POST" action="{{ route('player.random') }}">
+          @csrf
+
+          <button onclick="event.preventDefault();this.closest('form').submit();"
+            class="hover:underline w-content font-bold duration-500">
+            Buat Tim
+          </button>
+        </form>
       </div>
     </div>
     <div id="team" class="mt-20 mb-60 ">
@@ -118,33 +131,4 @@
 
     </div>
   </div>
-  <script>
-    const deleteRow = (e) => {
-      alert("Belum diimplementasi");
-    }
-
-    const addRow = () => {
-      alert("Belum diimplementasi");
-    }
-
-    const createTeam = () => {
-      alert("Belum diimplementasi");
-    }
-
-
-    const addRandom = () => {
-      alert("Belum diimplementasi");
-      return;
-      // fetch('https://randomuser.me/api/')
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     const name = data.results[0].name;
-      //     const rowData = {
-      //       nama: `${name.first} ${name.last}`,
-      //     };
-      //     const row = setRow(rowData);
-      //     document.querySelector('.table-body').appendChild(row);
-      //   });
-    };
-  </script>
 </x-app-layout>

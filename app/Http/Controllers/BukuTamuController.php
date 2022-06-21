@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BukuTamu;
+use Illuminate\Support\Facades\DB;
 
 class BukuTamuController extends Controller
 {
@@ -83,9 +84,16 @@ class BukuTamuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // update data buku tamu
+        $bukuTamu = BukuTamu::find($request->id);
+        $bukuTamu->nama = $request->nama;
+        $bukuTamu->email = $request->email;
+        $bukuTamu->komentar = $request->komentar;
+        $bukuTamu->save();
+
+        return redirect()->back()->with('success', 'Tamu berhasil diubah');
     }
 
     /**
@@ -94,8 +102,9 @@ class BukuTamuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        DB::table('buku_tamus')->where('id', $request->id)->delete();
+        return redirect()->back()->with('success', 'Tamu berhasil dihapus');
     }
 }

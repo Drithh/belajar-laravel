@@ -32,16 +32,20 @@ Route::get('/random-team', function () {
     return view('random-team', compact('players', 'playerTeams'));
 })->middleware(['auth'])->name('random-team');
 
+Route::post('player/store', [PlayerController::class, 'store'])->middleware(['auth'])->name('player.store');
+Route::post('player/destroy', [PlayerController::class, 'destroy'])->middleware(['auth'])->name('player.destroy');
+Route::post('player/random', [PlayerController::class, 'random'])->middleware(['auth'])->name('player.random');
+
 Route::get('buku-tamu', function () {
     $bukuTamu = new BukuTamuController;
     return $bukuTamu->index();
 })->middleware(['auth'])->name('buku-tamu');
 
 Route::post('buku-tamu/store', [BukuTamuController::class, 'store'])->middleware(['auth'])->name('buku-tamu.store');
+Route::post('buku-tamu/destroy', [BukuTamuController::class, 'destroy'])->middleware(['auth'])->name('buku-tamu.destroy');
 
-Route::post('buku-tamu/{id}/update', [BukuTamuController::class, 'update'])->middleware(['auth'])->name('buku-tamu.update');
+Route::post('buku-tamu/update', [BukuTamuController::class, 'update'])->middleware(['auth'])->name('buku-tamu.update');
 
-Route::delete('buku-tamu/{id}', [BukuTamuController::class, 'destroy'])->middleware(['auth'])->name('buku-tamu.destroy');
 
 
 require __DIR__ . '/auth.php';

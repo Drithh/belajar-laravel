@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Player;
+use App\Models\PlayerTeam;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlayerController extends Controller
 {
@@ -36,7 +38,30 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama' => 'required',
+        ]);
+
+        if ($validate) {
+            $player = new Player();
+
+            $player->name = $request->nama;
+            $player->player_team_id = rand(1, PlayerTeam::count());
+            $player->save();
+            return redirect()->back()->with('success', 'Player berhasil ditambahkan');
+        } else {
+            return redirect()->back()->withErrors($validate);
+        }
+    }
+
+    public function random()
+    {
+        $players = Player::all();
+        foreach ($players as $player) {
+            $player->player_team_id = rand(1, PlayerTeam::count());
+            $player->save();
+        }
+        return redirect()->back()->with('success', 'Player berhasil diacak');
     }
 
     /**
@@ -79,8 +104,9 @@ class PlayerController extends Controller
      * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Player $player)
+    public function destroy(Request $request)
     {
-        //
+        DB::table('players')->where('id', $request->id)->delete();
+        return redirect()->back()->with('success', 'Player berhasil dihapus');
     }
 }

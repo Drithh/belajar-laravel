@@ -50,20 +50,20 @@
       </div>
     </div>
     <section id="table-body">
-      @foreach ($bukuTamu as $t)
-        <form method="POST" action="{{ route('buku-tamu.update', $t->id) }}"
+      @foreach ($bukuTamu as $tamu)
+        <form method="POST" action="{{ route('buku-tamu.update', $tamu->id) }}"
           class="item-table flex h-16 gap-x-4 px-4 place-items-center border-b-secondary hover:bg-gray-100 border-b-[1px] border-opacity-50  ">
           <div class="id font-Source text-base text-primary opacity-80 text-center w-[12%]">
-            {{ $t->id }}
+            {{ $tamu->id }}
           </div>
           <div class="data font-Source text-base text-primary opacity-80 text-center w-[26%]">
-            {{ $t->nama }}
+            {{ $tamu->nama }}
           </div>
           <div class="data font-Source text-base text-primary opacity-80 text-center w-[22%]">
-            {{ $t->email }}
+            {{ $tamu->email }}
           </div>
           <div class="data font-Source text-base text-primary opacity-80 text-center w-[30%]">
-            {{ $t->komentar }}
+            {{ $tamu->komentar }}
           </div>
           <div class="font-Source text-base text-primary opacity-80 text-left w-[10%] flex place-content-between px-2 ">
 
@@ -73,16 +73,21 @@
                 <use xlink:href="#edit"></use>
               </svg>
             </button>
-            {{-- <a href="{{ route('buku-tamu.destroy', $t->id) }}" --}}
-            <button onclick="alert('Belum Diimplementasi')"
-              class="hover:bg-gray-200 w-12 h-12 duration-500 opacity-80 rounded-full flex place-content-center place-items-center">
-              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                <use xlink:href="#trash-bin"></use>
-              </svg>
-            </button>
-            {{-- </a> --}}
-          </div>
         </form>
+
+        <form method="POST" action="{{ route('buku-tamu.destroy') }}">
+          <input type="hidden" name="id" value="{{ $tamu->id }}">
+          @csrf
+          <button
+            class="hover:bg-gray-100 w-12 h-12 duration-500 rounded-full flex place-content-center place-items-center"
+            onclick="event.preventDefault();this.closest('form').submit();">
+            <svg fill="#424242" width="35" height="35" version="2.0">
+              <use href="#trash-bin" />
+            </svg>
+          </button>
+        </form>
+
+        </div>
       @endforeach
     </section>
 
@@ -158,7 +163,7 @@
       );
       el.querySelector('button.check').setAttribute(
         'onclick',
-        'alert("Belum Diimplementasi")'
+        "event.preventDefault();this.closest('form').submit();"
       );
       el.querySelector('button.check').setAttribute(
         'type',
