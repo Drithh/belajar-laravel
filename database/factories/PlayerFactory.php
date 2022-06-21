@@ -16,10 +16,9 @@ class PlayerFactory extends Factory
      */
     public function definition()
     {
-        $teams_id = [4, 14, 24, 34, 44, 54];
         return [
             'name' => $this->faker->name,
-            'player_team_id' => $this->faker->randomElement($teams_id),
+            'player_team_id' => $this->faker->numberBetween(1, 5),
         ];
     }
 }
