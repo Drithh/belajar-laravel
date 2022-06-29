@@ -24,6 +24,10 @@
       {{ __('Buku Tamu') }}
     </x-nav-link>
     <span> / </span>
+    <x-nav-link :href="route('inventory')" :active="request()->routeIs('inventory')">
+      {{ __('Inventori') }}
+    </x-nav-link>
+    <span> / </span>
     <form method="POST" action="{{ route('logout') }}">
       @csrf
 
@@ -102,7 +106,8 @@
         <form method="POST" action="{{ route('logout') }}">
           @csrf
 
-          <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
+          <x-responsive-nav-link :href="route('logout')"
+            onclick="event.preventDefault();
                                         this.closest('form').submit();">
             {{ __('Log Out') }}
           </x-responsive-nav-link>

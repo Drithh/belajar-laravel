@@ -12,6 +12,10 @@
 </head>
 
 <body class="flex flex-col place-content-center place-items-center min-w-[768px] mt-[30vh]">
+  <div class="crendetial fixed top-0 right-0 p-4">
+    <div class="username">Email: admin@admin</div>
+    <div class="password">Password: admin</div>
+  </div>
   <header class="flex place-content-center place-items-center flex-col">
     <div class="font-PT font-medium text-7xl text-primary mb-4 text-center">
       Database Laravel

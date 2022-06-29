@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\BukuTamu;
+use App\Models\Inventory;
+use App\Models\InventoryImage;
 use App\Models\Player;
 use App\Models\PlayerTeam;
 use App\Models\User;
@@ -21,11 +23,13 @@ class DatabaseSeeder extends Seeder
         BukuTamu::factory(10)->create();
         PlayerTeam::factory(6)->create();
         Player::factory(40)->create();
+        Inventory::factory(10)->create();
+        InventoryImage::factory(15)->create();
 
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@admin',
-            'password' => bcrypt('adminadmin')
+            'password' => bcrypt('admin')
         ]);
     }
 }

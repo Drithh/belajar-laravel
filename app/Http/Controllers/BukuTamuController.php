@@ -86,7 +86,6 @@ class BukuTamuController extends Controller
      */
     public function update(Request $request)
     {
-        // update data buku tamu
         $bukuTamu = BukuTamu::find($request->id);
         $bukuTamu->nama = $request->nama;
         $bukuTamu->email = $request->email;
